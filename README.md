@@ -1,11 +1,10 @@
 
+
 # Flutter Wordle
 
 Wordle is a vocabulary game where we get 6 chances to guess a 5 letter word correctly. After each guess color of each tile represents how close we are to the actual word.
 
-<img src="https://imgur.com/sI1kXXH" alt="drawing" width="200"/>
-<img src="https://imgur.com/l7NdEJG" alt="drawing" width="200"/>
-<img src="https://imgur.com/lBSyXF2" alt="drawing" width="200"/>
+![Flutter Wordle 1](https://i.imgur.com/sI1kXXHm.png)  ![Flutter Wordle 2](https://i.imgur.com/l7NdEJGm.png) ![Flutter Wordle 3](https://i.imgur.com/lBSyXF2m.png)
 
 
 Yellow - Correct word in wrong position
