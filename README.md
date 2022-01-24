@@ -3,9 +3,9 @@
 
 Wordle is a vocabulary game where we get 6 chances to guess a 5 letter word correctly. After each guess color of each tile represents how close we are to the actual word.
 
-![Flutter Wordle 1](https://imgur.com/sI1kXXH)
-![Flutter Wordle 2](https://imgur.com/l7NdEJG)
-![Flutter Wordle 3](https://imgur.com/lBSyXF2)
+![Flutter Wordle 1](<a href="https://imgur.com/sI1kXXH"><img src="https://i.imgur.com/sI1kXXH.png" title="source: imgur.com" /></a>)
+![Flutter Wordle 2](<a href="https://imgur.com/l7NdEJG"><img src="https://i.imgur.com/l7NdEJG.png" title="source: imgur.com" /></a>)
+![Flutter Wordle 3](<a href="https://imgur.com/lBSyXF2"><img src="https://i.imgur.com/lBSyXF2.png" title="source: imgur.com" /></a>)
 
 
 Yellow - Correct word in wrong position
