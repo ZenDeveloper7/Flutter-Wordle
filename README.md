@@ -7,9 +7,9 @@ Wordle is a vocabulary game where we get 6 chances to guess a 5 letter word corr
 ![Flutter Wordle 1](https://i.imgur.com/sI1kXXHm.png)  ![Flutter Wordle 2](https://i.imgur.com/l7NdEJGm.png) ![Flutter Wordle 3](https://i.imgur.com/lBSyXF2m.png)
 
 
-Yellow - Correct word in wrong position
-Green - Correct word in correct position
-Grey - Incorrect word
+Yellow - Correct word in wrong position  <br/>
+Green - Correct word in correct position  <br/>
+Grey - Incorrect word <br/>
 
 [Wordle Website](https://www.powerlanguage.co.uk/wordle/) 
 
