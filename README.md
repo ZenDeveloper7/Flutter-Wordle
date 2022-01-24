@@ -3,9 +3,9 @@
 
 Wordle is a vocabulary game where we get 6 chances to guess a 5 letter word correctly. After each guess color of each tile represents how close we are to the actual word.
 
-<a href="https://imgur.com/sI1kXXH"><img src="https://i.imgur.com/sI1kXXH.png" title="source: imgur.com" />
-<a href="https://imgur.com/l7NdEJG"><img src="https://i.imgur.com/l7NdEJG.png" title="source: imgur.com" />
-<a href="https://imgur.com/lBSyXF2"><img src="https://i.imgur.com/lBSyXF2.png" title="source: imgur.com" />
+<img src="https://imgur.com/sI1kXXH" alt="drawing" width="200"/>
+<img src="https://imgur.com/l7NdEJG" alt="drawing" width="200"/>
+<img src="https://imgur.com/lBSyXF2" alt="drawing" width="200"/>
 
 
 Yellow - Correct word in wrong position
