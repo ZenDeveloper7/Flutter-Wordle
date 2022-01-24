@@ -8,7 +8,7 @@ class Details extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle _textStyle = const TextStyle(fontSize: 18.0);
+    TextStyle _textStyle = const TextStyle(fontSize: 18.0, color: Colors.black);
 
     return Scaffold(
       appBar: AppBar(
@@ -54,20 +54,69 @@ class Details extends StatelessWidget {
                   ),
                 ),
               ),
-              Text('1. Guess the WORDLE in 5 tries.',
-                  style: _textStyle),
-              Text(
-                'Each guess must be a valid 5 letter word. Hit the check button to submit.\n'
-                'After each guess, the color of the tiles will change to show how close your guess was to the word.',
-                style: _textStyle,
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text('Guess the WORDLE in 5 tries.', style: _textStyle),
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  'Each guess must be a valid 5 letter word. Hit the check button to submit.',
+                  style: _textStyle,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  'After each guess, the color of the tiles will change to show how close your guess was to the word.',
+                  style: _textStyle,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: RichText(
+                  text: TextSpan(
+                    style: _textStyle,
+                    children: <TextSpan>[
+                      TextSpan(text: 'Yellow', style: _textStyle.copyWith(color: Colors.amber)),
+                      TextSpan(text: ' - Correct word in wrong position'),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: RichText(
+                  text: TextSpan(
+                    style: _textStyle,
+                    children: <TextSpan>[
+                      TextSpan(text: 'Green', style: _textStyle.copyWith(color: Colors.green)),
+                      TextSpan(text: ' - Correct word in correct position'),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: RichText(
+                  text: TextSpan(
+                    style: _textStyle,
+                    children: <TextSpan>[
+                      TextSpan(text: 'Grey', style: _textStyle.copyWith(color: Colors.grey)),
+                      TextSpan(text: ' - Incorrect word'),
+                    ],
+                  ),
+                ),
+              ),
+
+
               Container(
-                  padding: const EdgeInsets.only(top: 10.0),
+                  padding: const EdgeInsets.only(top: 50.0),
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           minimumSize: const Size(0.0, 50.0)),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Home()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
                       },
                       child: const Text('Start')))
             ],
