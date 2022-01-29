@@ -1,7 +1,10 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_wordle/constants/constants.dart';
+import 'package:flutter_wordle/services/api.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -13,22 +16,20 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late int row;
   late int count;
-  late int resultIndex;
   late List<TextEditingController> _controllerList;
   late List<Color> _boxColorList;
   late int gridCount;
   late List<bool> _enableList;
   late bool gameOver;
-  late List<String> resultList;
+  late String result = '';
   late String gameMessage;
+  late List<dynamic> randomWords;
 
   @override
   void initState() {
     super.initState();
     row = 0;
     count = 5;
-    resultList = ["SMILE", "HONEY", "COUCH", "SMELL", "COLOR"];
-    resultIndex = Random().nextInt(resultList.length);
     gridCount = 25;
     gameMessage = '';
     gameOver = false;
@@ -39,6 +40,15 @@ class _HomeState extends State<Home> {
     }
     _controllerList = List<TextEditingController>.generate(
         gridCount, (index) => TextEditingController());
+    setWord();
+  }
+
+  setWord() async {
+    final wordList = await API().getRandomWords();
+    setState(() {
+      randomWords = wordList;
+      result = randomWords[Random().nextInt(5)].toString().toUpperCase();
+    });
   }
 
   @override
@@ -50,65 +60,58 @@ class _HomeState extends State<Home> {
           systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.deepOrange,
           ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Hero(
-                  tag: 'Logo',
-                  child: FlutterLogo(
-                    size: 25.0,
-                  )),
-              Text(
-                'Flutter Wordle',
-                style: TextStyle(color: Colors.black, fontSize: 20.0),
-              ),
-            ],
-          ),
+          title: appBarContents,
           backgroundColor: Colors.white,
           centerTitle: true,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20))),
+          shape: appBarShape,
         ),
         body: Center(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Visibility(
-                    visible: gameOver,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      child: Text(
-                        gameMessage,
-                        style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
+            child: (result.isEmpty)
+                ? const CircularProgressIndicator()
+                : SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Visibility(
+                          visible: gameOver,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20.0),
+                            child: Text(
+                              gameMessage,
+                              style: const TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        _gridView(),
+                        Container(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(0.0, 50.0)),
+                                onLongPress: _showAnswer,
+                                onPressed:
+                                    gameOver ? _resetGame : _validateText,
+                                child: gameOver
+                                    ? const Text('Reset')
+                                    : const Text('Check'))),
+                      ],
                     ),
                   ),
-                  _gridView(),
-                  Container(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(0.0, 50.0)),
-                          onPressed: gameOver ? _resetGame : _validateText,
-                          child: gameOver
-                              ? const Text('Reset')
-                              : const Text('Check'))),
-                ],
-              ),
-            ),
           ),
         ),
       ),
     );
+  }
+
+  _showAnswer() {
+    if (kDebugMode) {
+      print(result);
+    }
   }
 
   Widget _gridView() {
@@ -147,9 +150,9 @@ class _HomeState extends State<Home> {
   _resetGame() {
     setState(() {
       row = 0;
+      result = randomWords[Random().nextInt(5)].toString().toUpperCase();
       gameOver = false;
       gameMessage = '';
-      resultIndex = Random().nextInt(resultList.length);
       _enableList = List<bool>.filled(gridCount, true);
       _boxColorList = List<Color>.filled(gridCount, Colors.white);
       for (var i in _controllerList) {
@@ -164,12 +167,13 @@ class _HomeState extends State<Home> {
     for (var i = row; i < last; i++) {
       inputString += _controllerList[i].text.toString();
     }
-    if (inputString.isNotEmpty) {
-      if (resultList[resultIndex] == inputString) {
+    if (inputString.length < 5) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Invalid Input')));
+    } else if (inputString.isNotEmpty) {
+      if (result == inputString) {
         setState(() {
           gameOver = true;
-          gameMessage =
-              'Yay! you guessed it right. The word is ${resultList[resultIndex]}';
+          gameMessage = 'Yay! you guessed it right. The word is $result';
           for (var i = row; i < last; i++) {
             _boxColorList[i] = Colors.green;
           }
@@ -179,14 +183,14 @@ class _HomeState extends State<Home> {
         if (row == (gridCount - count)) {
           setState(() {
             gameOver = true;
-            gameMessage = 'Uh! Oh. You\'ve used all your chances.';
+            gameMessage =
+                'Uh! Oh. You\'ve used all your chances. The correct word is $result';
           });
         }
         for (var i = row; i < last; i++) {
           setState(() {
-            if (resultList[resultIndex].characters
-                .contains(inputString[(count - (last - i))])) {
-              if (resultList[resultIndex][(count - (last - i))] ==
+            if (result.characters.contains(inputString[(count - (last - i))])) {
+              if (result[(count - (last - i))] ==
                   inputString[(count - (last - i))]) {
                 _boxColorList[i] = Colors.green;
               } else {

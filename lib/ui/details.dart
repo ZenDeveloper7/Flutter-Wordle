@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_wordle/ui/Home.dart';
+import 'package:flutter_wordle/ui/home.dart';
 
 class Details extends StatelessWidget {
   const Details({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class Details extends StatelessWidget {
                     style: _textStyle,
                     children: <TextSpan>[
                       TextSpan(text: 'Yellow', style: _textStyle.copyWith(color: Colors.amber)),
-                      TextSpan(text: ' - Correct word in wrong position'),
+                      const TextSpan(text: ' - Correct word in wrong position'),
                     ],
                   ),
                 ),
@@ -91,7 +91,7 @@ class Details extends StatelessWidget {
                     style: _textStyle,
                     children: <TextSpan>[
                       TextSpan(text: 'Green', style: _textStyle.copyWith(color: Colors.green)),
-                      TextSpan(text: ' - Correct word in correct position'),
+                      const TextSpan(text: ' - Correct word in correct position'),
                     ],
                   ),
                 ),
@@ -103,12 +103,11 @@ class Details extends StatelessWidget {
                     style: _textStyle,
                     children: <TextSpan>[
                       TextSpan(text: 'Grey', style: _textStyle.copyWith(color: Colors.grey)),
-                      TextSpan(text: ' - Incorrect word'),
+                      const TextSpan(text: ' - Incorrect word'),
                     ],
                   ),
                 ),
               ),
-
 
               Container(
                   padding: const EdgeInsets.only(top: 50.0),

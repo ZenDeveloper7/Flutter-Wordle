@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wordle/ui/Home.dart';
+import 'package:flutter_wordle/ui/home.dart';
 
 class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);

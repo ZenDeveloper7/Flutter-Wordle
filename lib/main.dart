@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wordle/ui/Details.dart';
-import 'package:flutter_wordle/ui/Home.dart';
-import 'package:flutter_wordle/ui/Splash.dart';
+import 'package:flutter_wordle/ui/details.dart';
+import 'package:flutter_wordle/ui/home.dart';
+import 'package:flutter_wordle/ui/splash.dart';
 
 void main() {
   runApp(const MyApp());
